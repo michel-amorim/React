@@ -1,11 +1,19 @@
 import React from "react";
-import Home from "./components/Home";
+import Header from "./components/Header";
+import Menu from "./components/Menu";
 
 function App() {
   return (
     <>
-      <Home />
+      <Header title="pagina Inicial" />
       <h1>Hello Word</h1>
+      <Menu>
+        <ul>
+          <li>Home</li>
+          <li>Contact</li>
+          <li>About</li>
+        </ul>
+      </Menu>
     </>
   );
 }
