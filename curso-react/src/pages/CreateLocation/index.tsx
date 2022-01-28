@@ -7,11 +7,13 @@ import api from "../../services/api";
 
 import logo from "../../assets/logo.svg";
 import "../CreateLocation/style.css";
+import Feature from "../../components/feature";
 
 interface Item {
   id: number;
-  title: string;
-  image_url: string;
+  name: string;
+  img: string;
+  description: string;
 }
 
 const CreateLocation: React.FC = () => {
@@ -19,7 +21,7 @@ const CreateLocation: React.FC = () => {
 
   // função assíncrona
   useEffect(() => {
-    api.get("items").then((response) => {
+    api.get("/v1/produtos").then((response) => {
       setItems(response.data);
     });
   }, []);
@@ -96,7 +98,12 @@ const CreateLocation: React.FC = () => {
             <ul className="items-grid">
               {items.map((item) => (
                 <li key={item.id}>
-                  <img src={item.image_url} alt={item.title} />
+                  <Feature
+                    img={item.img}
+                    title={item.name}
+                    width="300px"
+                    height="300px"
+                  />
                 </li>
               ))}
             </ul>
