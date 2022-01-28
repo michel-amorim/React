@@ -2,7 +2,7 @@
 
 ## Sobre o projeto
 
-Mostrando meu desenvolvimento nos estudos em React.Js,
+
 
 # Tecnologias utilizadas
 
