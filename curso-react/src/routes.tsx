@@ -1,12 +1,15 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Home from "../src/pages/Home";
+import { Route, BrowserRouter } from "react-router-dom";
 
-const Routes: React.FC = () => {
+import Home from "./pages/Home";
+import CreateLocation from "./pages/CreateLocation";
+
+const Routes = () => {
   return (
-    <Switch>
-      <Route path="/" exact component={Home} />
-    </Switch>
+    <BrowserRouter>
+      <Route component={Home} path="/" exact />
+      <Route component={CreateLocation} path="/create-location" />
+    </BrowserRouter>
   );
 };
 
