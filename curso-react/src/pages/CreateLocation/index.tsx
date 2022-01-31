@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
@@ -41,18 +47,21 @@ const CreateLocation: React.FC = () => {
     });
   }, []);
 
-  function handMapClick(event: LeafletMouseEvent): void {
+  const handMapClick = useCallback((event: LeafletMouseEvent): void => {
     console.log(handMapClick);
     setSelectedMapPosition([event.latlng.lat, event.latlng.lng]);
-  }
+  }, []);
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    // console.log(event.target.name, event.target.value);
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  }
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      // console.log(event.target.name, event.target.value);
+      const { name, value } = event.target;
+      setFormData({ ...formData, [name]: value });
+    },
+    [formData]
+  );
 
-  function handleSelectItem(id: number) {
+  const handleSelectItem = useCallback((id: number) => {
     const alreadySelected = selectedItems.findIndex((item) => item === id);
 
     if (alreadySelected >= 0) {
@@ -61,28 +70,31 @@ const CreateLocation: React.FC = () => {
     } else {
       setSelectedIems([...selectedItems, id]);
     }
-  }
+  }, []);
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
 
-    const { city, email, name, uf, whatsapp } = formData;
-    const [latitude, longitude] = selectedMapPosition;
-    const items = selectedItems;
+      const { city, email, name, uf, whatsapp } = formData;
+      const [latitude, longitude] = selectedMapPosition;
+      const items = selectedItems;
 
-    const data = {
-      city,
-      email,
-      name,
-      uf,
-      whatsapp,
-      latitude,
-      longitude,
-      items,
-    };
+      const data = {
+        city,
+        email,
+        name,
+        uf,
+        whatsapp,
+        latitude,
+        longitude,
+        items,
+      };
 
-    await api.post("location", data);
-  }
+      await api.post("location", data);
+    },
+    [formData, selectedItems, selectedMapPosition]
+  );
 
   return (
     <div id="page-create-location">
